@@ -1,26 +1,338 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/*  DG·ALLEN Admin — design tokens                                    */
+/*  Minimalist, premium: dark navy rail, light canvas, one red accent */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --card-2: #fafbfc;
+  --border: #e9ebef;
+  --border-strong: #d9dde3;
+
+  --ink: #0e1726;
+  --muted: #58616f;
+  --faint: #8b94a2;
+
+  --accent: #e02b2b;
+  --accent-hover: #c21f1f;
+  --accent-ink: #b11b1b;
+  --accent-soft: #fdecec;
+
+  --sidebar: #0b1120;
+  --sidebar-2: #141d31;
+  --sidebar-line: rgba(255, 255, 255, 0.07);
+  --sidebar-ink: #c6cfe0;
+  --sidebar-faint: #76819b;
+
+  --green: #15935a;
+  --green-soft: #e7f5ee;
+  --amber: #a9690a;
+  --amber-soft: #faf0dd;
+  --blue: #2563eb;
+  --blue-soft: #e8f0fe;
+  --slate: #5b6676;
+  --slate-soft: #eef1f5;
+  --violet: #6d47d9;
+  --violet-soft: #efeafc;
+
+  --ring: rgba(224, 43, 43, 0.22);
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08), 0 2px 4px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.16);
+
+  --radius: 12px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-sidebar: var(--sidebar);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+/* Refined scrollbars */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d3d8df;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #bcc3cd;
+  background-clip: content-box;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+  border-radius: 8px;
+}
+
+@layer components {
+  /* ---- Surfaces ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 38px;
+    padding: 0 0.9rem;
+    border-radius: 9px;
+    font-size: 0.875rem;
+    font-weight: 550;
+    line-height: 1;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.05s;
+    user-select: none;
+  }
+  .btn:active {
+    transform: translateY(0.5px);
+  }
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--ink);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover {
+    background: var(--card-2);
+    border-color: #c7ccd4;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+  }
+  .btn-ghost:hover {
+    background: #eef0f3;
+    color: var(--ink);
+  }
+  .btn-danger {
+    background: var(--card);
+    color: var(--accent-ink);
+    border-color: #f1c9c9;
+  }
+  .btn-danger:hover {
+    background: var(--accent-soft);
+  }
+  .btn-sm {
+    height: 32px;
+    padding: 0 0.7rem;
+    font-size: 0.82rem;
+    border-radius: 8px;
+  }
+  .btn-icon {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
+  }
+
+  /* ---- Badges / pills ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.33rem;
+    padding: 0.2rem 0.56rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+  .badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+  .badge-green { background: var(--green-soft); color: var(--green); }
+  .badge-amber { background: var(--amber-soft); color: var(--amber); }
+  .badge-slate { background: var(--slate-soft); color: var(--slate); }
+  .badge-red   { background: var(--accent-soft); color: var(--accent-ink); }
+  .badge-blue  { background: var(--blue-soft); color: var(--blue); }
+  .badge-violet{ background: var(--violet-soft); color: var(--violet); }
+
+  /* ---- Form controls ---- */
+  .label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 550;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .hint {
+    font-size: 0.78rem;
+    color: var(--faint);
+  }
+  .input,
+  .textarea,
+  .select {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: 9px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.875rem;
+    color: var(--ink);
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input::placeholder,
+  .textarea::placeholder {
+    color: var(--faint);
+  }
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+  .textarea {
+    resize: vertical;
+    min-height: 84px;
+    line-height: 1.5;
+  }
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b94a2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    padding-right: 2rem;
+  }
+
+  /* ---- Sidebar nav ---- */
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 40px;
+    padding: 0 0.7rem;
+    border-radius: 9px;
+    color: var(--sidebar-faint);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-item:hover {
+    background: var(--sidebar-2);
+    color: var(--sidebar-ink);
+  }
+  .nav-item[data-active="true"] {
+    background: var(--sidebar-2);
+    color: #fff;
+  }
+  .nav-item[data-active="true"]::before {
+    content: "";
+    position: absolute;
+    left: -0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+
+  /* ---- Table ---- */
+  .t-head {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+  }
+  .row-hover:hover {
+    background: var(--card-2);
+  }
+}
+
+/* Drawer / overlay animation */
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes drawer-in {
+  from { transform: translateX(16px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes pop-in {
+  from { transform: translateY(6px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
 }
